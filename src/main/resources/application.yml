@@ -1,0 +1,21 @@
+db:
+  source: jdbc
+  connection:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    poolName: hikariPool
+    initializationFailTimeout: -1
+    connectionTimeout: 4000
+  metrics:
+    - type: TIMER
+      errors: false
+      statement-names: [ "select-.*" ]
+  services:
+    tracing:
+      - statement-names: [ "select-.*" ]
+  statements:
+    book: "SELECT * FROM books WHERE id = :id"
+    all-book: "SELECT * FROM books"
+    delete: "DELETE FROM books WHERE id=:id"
+    create: "INSERT INTO books(isbn,title,author_id,price) values (:isbn,:title,:author_id,:price)"
